@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>От классиков до блогеров — влияние инфлюенсеров на молодёжь</title>
+<meta name="description" content="Инфлюенсеры прошлого и настоящего: как классики и блогеры формируют сознание и воспитание молодёжи, и как сохранить критическое мышление.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============ 1. Design tokens ============ */
+:root {
+  --bg: #f5f2ec;
+  --surface: #ffffff;
+  --ink: #121214;
+  --ink-2: #44444c;
+  --muted: #7d7d87;
+  --line: #d8d3c8;
+  --accent: #d4442c;
+  --classic: #1f3a5f;
+  --ok: #2f7d4f;
+  --bad: #b3261e;
+  --radius: 16px;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 10px 30px rgba(0, 0, 0, .06);
+  --serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d0d10;
+    --surface: #17171c;
+    --ink: #f2efe8;
+    --ink-2: #bcb9b1;
+    --muted: #8a8890;
+    --line: #2b2b33;
+    --accent: #ff6b4f;
+    --classic: #9dbde6;
+    --ok: #6fcf97;
+    --bad: #ff8a80;
+    --shadow: 0 10px 30px rgba(0, 0, 0, .45);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d0d10;
+  --surface: #17171c;
+  --ink: #f2efe8;
+  --ink-2: #bcb9b1;
+  --muted: #8a8890;
+  --line: #2b2b33;
+  --accent: #ff6b4f;
+  --classic: #9dbde6;
+  --ok: #6fcf97;
+  --bad: #ff8a80;
+  --shadow: 0 10px 30px rgba(0, 0, 0, .45);
+}
+
+/* ============ 2. Base ============ */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--serif); line-height: 1.1; margin: 0 0 .5em; font-weight: 700; letter-spacing: -.01em; }
+p { margin: 0 0 1em; }
+ul { margin: 0; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+.container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+.section { padding: clamp(64px, 9vw, 112px) 0; border-top: 1px solid var(--line); }
+.eyebrow { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+.lead { font-size: clamp(18px, 2vw, 20px); color: var(--ink-2); max-width: 62ch; }
+.section-head { margin-bottom: 40px; }
+.section-head h2 { font-size: clamp(32px, 4.6vw, 52px); max-width: 20ch; }
+.hidden { display: none !important; }
+section[id], footer[id] { scroll-margin-top: 84px; }
+
+/* buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 22px; border-radius: 999px;
+  border: 1.5px solid var(--ink); background: transparent; color: var(--ink);
+  font: 600 15px/1 var(--sans); text-decoration: none; cursor: pointer;
+  transition: transform .2s, background .2s, color .2s, border-color .2s;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { background: var(--ink); color: var(--bg); }
+.btn-primary:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* reveal on scroll (only when JS runs) */
+.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+.js .reveal.in { opacity: 1; transform: none; }
+
+/* ============ 3. Header ============ */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 12px 16px; flex-wrap: wrap; padding: 12px 0; }
+.brand { font-family: var(--serif); font-weight: 800; font-size: 19px; text-decoration: none; white-space: nowrap; }
+.brand span { color: var(--accent); }
+.nav { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.nav a { font-size: 14px; font-weight: 500; text-decoration: none; padding: 8px 12px; border-radius: 999px; color: var(--ink-2); }
+.nav a:hover { color: var(--ink); background: var(--surface); }
+.theme-toggle {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  font-size: 17px; cursor: pointer; display: grid; place-items: center; margin-left: 4px;
+}
+
+/* ============ 4. Hero ============ */
+.hero { position: relative; overflow: hidden; padding: clamp(56px, 10vw, 128px) 0 clamp(48px, 7vw, 88px); }
+.hero::before {
+  content: ""; position: absolute; right: -20%; bottom: -45%;
+  width: 70vmax; height: 70vmax; pointer-events: none;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 18%, transparent) 0%, transparent 62%);
+}
+.hero .container { position: relative; z-index: 1; }
+.hero h1 { font-size: clamp(44px, 8.4vw, 104px); font-weight: 800; line-height: .98; letter-spacing: -.02em; max-width: 13ch; margin-bottom: 28px; }
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero .sub { font-family: var(--serif); font-size: clamp(20px, 2.6vw, 28px); color: var(--ink-2); max-width: 36ch; margin-bottom: 18px; }
+.hero .lead { margin-bottom: 36px; }
+.hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 72px; }
+
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); position: relative; }
+.timeline::before { content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 1px; background: var(--ink-2); opacity: .4; }
+.timeline li { position: relative; padding: 28px 14px 0 0; }
+.timeline li::before {
+  content: ""; position: absolute; left: 0; top: 0; width: 15px; height: 15px; border-radius: 50%;
+  background: var(--bg); border: 2px solid var(--ink);
+}
+.timeline li.modern::before { background: var(--accent); border-color: var(--accent); }
+.timeline .year { display: block; font-family: var(--serif); font-size: 26px; font-weight: 700; line-height: 1.1; }
+.timeline .label { font-size: 14px; color: var(--ink-2); line-height: 1.4; }
+.timeline-caption { margin-top: 18px; font-size: 13px; color: var(--muted); }
+
+/* ============ 5. Compare ============ */
+.tablist { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.tab {
+  font: 600 15px/1 var(--sans); padding: 12px 18px; border-radius: 999px;
+  border: 1.5px solid var(--line); background: var(--surface); color: var(--ink-2); cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.tab:hover { color: var(--ink); border-color: var(--ink-2); }
+.tab[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.side {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: clamp(22px, 3vw, 34px); box-shadow: var(--shadow);
+}
+.side .tag { display: block; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 12px; color: var(--muted); }
+.side h3 { font-size: clamp(26px, 3vw, 32px); margin-bottom: 14px; }
+.side.classic { border-top: 4px solid var(--classic); }
+.side.classic h3 { color: var(--classic); }
+.side.modern { border-top: 4px solid var(--accent); }
+.side.modern h3 { font-family: var(--sans); font-weight: 800; letter-spacing: -.02em; }
+.side.modern .tag { color: var(--accent); }
+.side p { color: var(--ink-2); }
+.side ul { padding-left: 18px; color: var(--ink-2); font-size: 15px; }
+.side li { margin-bottom: 8px; }
+.verdict { margin: 20px 0 0; padding: 14px 16px; border-radius: 12px; background: var(--bg); font-size: 15px; }
+
+.metrics { margin-top: 48px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(22px, 3vw, 36px); box-shadow: var(--shadow); }
+.metrics h3 { font-size: 26px; margin-bottom: 4px; }
+.metric { padding: 18px 0; border-bottom: 1px dashed var(--line); }
+.metric:last-of-type { border-bottom: 0; }
+.metric-name { font-weight: 600; margin-bottom: 10px; }
+.bar-row { display: grid; grid-template-columns: 84px 1fr 44px; align-items: center; gap: 12px; font-size: 14px; margin-bottom: 8px; }
+.bar-row .who { color: var(--ink-2); }
+.bar-row .val { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.bar { height: 10px; background: var(--line); border-radius: 999px; overflow: hidden; }
+.bar > i { display: block; height: 100%; width: 0; border-radius: inherit; transition: width 1.1s cubic-bezier(.2, .7, .2, 1); }
+.bar.c > i { background: var(--classic); }
+.bar.m > i { background: var(--accent); }
+.note { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
+
+/* ============ 6. Analysis ============ */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+.col-title { display: flex; align-items: center; gap: 12px; font-family: var(--serif); font-size: 28px; margin-bottom: 18px; }
+.col-title .dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+.pos .dot { background: var(--ok); }
+.neg .dot { background: var(--bad); }
+.acc { display: grid; gap: 10px; }
+details {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  padding: 0 18px; transition: border-color .2s;
+}
+details[open] { border-color: var(--muted); }
+summary {
+  list-style: none; cursor: pointer; padding: 16px 0; font-weight: 600;
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+}
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font-size: 22px; line-height: 1; color: var(--muted); flex: none; }
+details[open] summary::after { content: "–"; }
+details p { margin: 0 0 18px; color: var(--ink-2); font-size: 15px; }
+.quote {
+  margin: 48px 0 0; padding: 26px 28px; background: var(--surface);
+  border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0;
+  font-family: var(--serif); font-size: clamp(20px, 2.6vw, 26px); line-height: 1.35;
+}
+.quote cite { display: block; margin-top: 12px; font-family: var(--sans); font-size: 14px; color: var(--muted); font-style: normal; }
+
+/* ============ 7. Quiz ============ */
+.quiz { max-width: 780px; margin: 0 auto; }
+.quiz-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: clamp(22px, 4vw, 40px); }
+.progress { height: 6px; background: var(--line); border-radius: 999px; overflow: hidden; margin-bottom: 26px; }
+.progress > i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .4s ease; }
+.q-meta { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.q-text { font-family: var(--serif); font-size: clamp(22px, 3vw, 28px); line-height: 1.3; margin-bottom: 18px; }
+.case {
+  background: var(--bg); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0;
+  padding: 16px 18px; color: var(--ink-2); font-size: 16px; margin-bottom: 22px;
+}
+.options { display: grid; gap: 10px; }
+.opt {
+  text-align: left; font: 500 16px/1.45 var(--sans); color: var(--ink);
+  background: var(--bg); border: 1.5px solid var(--line); border-radius: 12px;
+  padding: 14px 16px; cursor: pointer; transition: border-color .2s, background .2s;
+}
+.opt:hover:not(:disabled) { border-color: var(--ink); }
+.opt:disabled { cursor: default; }
+.opt.correct { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 14%, var(--surface)); }
+.opt.wrong { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 12%, var(--surface)); }
+.feedback { display: none; margin-top: 20px; padding: 16px 18px; border-radius: 12px; background: var(--bg); font-size: 15px; color: var(--ink-2); }
+.feedback.show { display: block; }
+.feedback strong { display: block; color: var(--ink); margin-bottom: 4px; }
+.quiz-actions { display: flex; justify-content: flex-end; margin-top: 22px; }
+.result { text-align: center; padding: 8px 0; }
+.result .score { font-family: var(--serif); font-size: clamp(64px, 12vw, 96px); font-weight: 800; line-height: 1; color: var(--accent); }
+.result h3 { margin: 14px 0 10px; font-size: 28px; }
+.result p { color: var(--ink-2); max-width: 52ch; margin: 0 auto 20px; }
+
+/* ============ 8. Footer / conclusions ============ */
+.site-footer { background: var(--ink); color: var(--bg); padding: clamp(64px, 9vw, 104px) 0 32px; }
+.site-footer .eyebrow { color: var(--accent); }
+.site-footer h2 { font-size: clamp(32px, 4.6vw, 52px); max-width: 20ch; color: inherit; }
+.conclusions { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 28px; margin-top: 40px; }
+.conc { border-top: 1px solid color-mix(in srgb, var(--bg) 25%, transparent); padding-top: 18px; }
+.conc .num { font-family: var(--serif); font-size: 44px; font-weight: 800; line-height: 1; color: var(--accent); margin-bottom: 10px; }
+.conc h3 { font-size: 22px; color: inherit; }
+.conc p { margin: 0; font-size: 15px; opacity: .82; }
+.checklist { margin-top: 56px; padding: clamp(22px, 3vw, 32px); border: 1px solid color-mix(in srgb, var(--bg) 25%, transparent); border-radius: var(--radius); }
+.checklist h3 { font-size: 26px; color: inherit; margin-bottom: 18px; }
+.checklist ol { list-style: none; margin: 0; padding: 0; counter-reset: q; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px; }
+.checklist li { counter-increment: q; position: relative; padding-left: 44px; font-size: 16px; }
+.checklist li::before { content: counter(q); position: absolute; left: 0; top: -4px; font-family: var(--serif); font-size: 28px; font-weight: 800; color: var(--accent); }
+.sources { margin-top: 40px; font-size: 14px; opacity: .78; }
+.sources h4 { font-size: 13px; text-transform: uppercase; letter-spacing: .14em; margin: 0 0 10px; }
+.sources ol { padding-left: 18px; margin: 0; }
+.sources li { margin-bottom: 4px; }
+.footer-bottom { margin-top: 48px; padding-top: 22px; border-top: 1px solid color-mix(in srgb, var(--bg) 20%, transparent); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 14px; opacity: .8; }
+.footer-bottom a { color: inherit; }
+
+/* ============ 9. Responsive ============ */
+@media (max-width: 900px) {
+  .compare-grid, .two-col, .conclusions { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  body { font-size: 16px; }
+  .nav a { padding: 7px 9px; font-size: 13px; }
+  .timeline { grid-template-columns: 1fr; }
+  .timeline::before { top: 0; bottom: 0; left: 7px; right: auto; width: 1px; height: auto; }
+  .timeline li { padding: 0 0 22px 34px; }
+  .timeline li::before { top: 2px; }
+  .timeline .year { font-size: 22px; }
+  .bar-row { grid-template-columns: 76px 1fr 40px; gap: 10px; }
+  .checklist ol { grid-template-columns: 1fr; }
+  .hero-cta .btn { width: 100%; justify-content: center; }
+}
+.site-footer .lead { color: inherit; opacity: .82; }
+.site-footer .lead { margin-bottom: 0; }
+.site-footer .conclusions { margin-top: 44px; }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#top">Классики<span>/</span>Блогеры</a>
+    <nav class="nav" aria-label="Разделы сайта">
+      <a href="#compare">Сравнение</a>
+      <a href="#analysis">Анализ</a>
+      <a href="#quiz">Квиз</a>
+      <a href="#conclusions">Выводы</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Переключить тему оформления">◐</button>
+  </div>
+</header>
+
+<main>
+  <!-- 1. HERO -->
+  <section class="hero" id="top">
+    <div class="container">
+      <span class="eyebrow">Медиа · воспитание · критическое мышление</span>
+      <h1>От классиков до блогеров: <em>кто</em> формирует наших детей?</h1>
+      <p class="sub">Голоса, которые учат думать, и голоса, которые учат реагировать.</p>
+      <p class="lead">Влияние на умы молодёжи не родилось с YouTube. Меняются каналы, скорость и форма подачи. Вопрос остаётся прежним: кто говорит, как он говорит и что происходит с нами после того, как мы услышали. Ниже — сравнение двух эпох, честный разбор плюсов и минусов и мини-квиз, который проверяет ваш собственный фильтр.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#compare">Сравнить эпохи →</a>
+        <a class="btn" href="#quiz">Проверить себя</a>
+      </div>
+
+      <ol class="timeline" aria-label="Хронология ключевых точек">
+        <li>
+          <span class="year">1762</span>
+          <span class="label">Руссо, «Эмиль, или о воспитании» — трактат о воспитании</span>
+        </li>
+        <li>
+          <span class="year">1936</span>
+          <span class="label">Дейл Карнеги: «Как завоёвывать друзей и оказывать влияние на людей»</span>
+        </li>
+        <li>
+          <span class="year">1985</span>
+          <span class="label">Нил Постман: «Развлекаем себя до смерти» о культуре телевидения</span>
+        </li>
+        <li class="modern">
+          <span class="year">2005</span>
+          <span class="label">YouTube: видео становится массовой трибуной</span>
+        </li>
+        <li class="modern">
+          <span class="year">2013</span>
+          <span class="label">Telegram: каналы для прямого разговора с аудиторией</span>
+        </li>
+      </ol>
+      <p class="timeline-caption">Тёмные точки — классика, красные — современные платформы. Шкала выборочная, не полная.</p>
+    </div>
+  </section>
+
+  <!-- 2. COMPARE -->
+  <section class="section" id="compare">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Раздел 01 · Сравнение</span>
+        <h2>Два способа говорить с читателем</h2>
+        <p class="lead">Выберите параметр. Классики и блогеры влияют по-разному — не потому что одни «лучше», а потому что у каждых свои правила игры.</p>
+      </div>
+
+      <div class="tablist reveal" role="tablist" aria-label="Параметры сравнения">
+        <button class="tab" role="tab" id="tab-format" aria-controls="panel-format" aria-selected="true" tabindex="0">Формат</button>
+        <button class="tab" role="tab" id="tab-speed" aria-controls="panel-speed" aria-selected="false" tabindex="-1">Скорость</button>
+        <button class="tab" role="tab" id="tab-depth" aria-controls="panel-depth" aria-selected="false" tabindex="-1">Глубина</button>
+        <button class="tab" role="tab" id="tab-mech" aria-controls="panel-mech" aria-selected="false" tabindex="-1">Механизм влияния</button>
+      </div>
+
+      <div class="panel reveal" role="tabpanel" id="panel-format" aria-labelledby="tab-format">
+        <div class="compare-grid">
+          <article class="side classic">
+            <span class="tag">Классики</span>
+            <h3>Текст как конструкция</h3>
+            <p>Трактат, эссе, диалог, роман. Мысль разворачивается по главам: тезис, возражение, пример, вывод.</p>
+            <ul>
+              <li>Длинная форма: от нескольких страниц до томов</li>
+              <li>Читатель сам проходит путь аргумента</li>
+              <li>Нужны концентрация и время</li>
+            </ul>
+            <p class="verdict">Формат требует усилия — и поэтому учит работать с мыслью.</p>
+          </article>
+          <article class="side modern">
+            <span class="tag">Блогеры</span>
+            <h3>Монолог на 30 секунд</h3>
+            <p>Короткое видео, нарезка, пост, сторис. Монтаж, крупный план, музыка и эмоция — в первые секунды.</p>
+            <ul>
+              <li>Формат рассчитан на удержание внимания</li>
+              <li>Аргумент сжат до лозунга или готового вывода</li>
+              <li>Один голос задаёт целую картину мира в одной ленте</li>
+            </ul>
+            <p class="verdict">Формат удобен и быстр — и потому легко подменяет размышление готовым ответом.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="panel reveal" role="tabpanel" id="panel-speed" aria-labelledby="tab-speed" hidden>
+        <div class="compare-grid">
+          <article class="side classic">
+            <span class="tag">Классики</span>
+            <h3>Медленная волна</h3>
+            <p>Книга расходилась тиражами, письма и споры несли идеи месяцами и годами.</p>
+            <ul>
+              <li>Путь к аудитории долгий</li>
+              <li>Зато влияние копилось и держалось десятилетиями</li>
+            </ul>
+            <p class="verdict">Идея приходила медленно, но оставалась надолго.</p>
+          </article>
+          <article class="side modern">
+            <span class="tag">Блогеры</span>
+            <h3>Мгновенный резонанс</h3>
+            <p>Ролик может увидеть огромная аудитория за несколько дней, а реакция приходит в комментариях сразу.</p>
+            <ul>
+              <li>Алгоритм ускоряет то, что вызывает эмоцию</li>
+              <li>Ошибка тоже распространяется мгновенно</li>
+            </ul>
+            <p class="verdict">Скорость — главное преимущество и главный риск одновременно.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="panel reveal" role="tabpanel" id="panel-depth" aria-labelledby="tab-depth" hidden>
+        <div class="compare-grid">
+          <article class="side classic">
+            <span class="tag">Классики</span>
+            <h3>Аргумент до конца</h3>
+            <p>Посылки, возражения, контекст. Читатель должен сам дойти до вывода — и в этом главная нагрузка.</p>
+            <ul>
+              <li>Тренирует логику и терпение</li>
+              <li>Можно вернуться и перечитать спорный фрагмент</li>
+            </ul>
+            <p class="verdict">Глубина здесь — не украшение, а сам способ мышления.</p>
+          </article>
+          <article class="side modern">
+            <span class="tag">Блогеры</span>
+            <h3>Вывод без пути</h3>
+            <p>Итог подаётся готовым. Глубину часто заменяют уверенный тон и эмоция.</p>
+            <ul>
+              <li>Проверка сказанного — отдельная работа, которую зритель редко делает</li>
+              <li>Авторитет держится на образе, а не на доказательстве</li>
+            </ul>
+            <p class="verdict">Глубина есть, но её надо искать самому — и это главный навык, который нужно развивать.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="panel reveal" role="tabpanel" id="panel-mech" aria-labelledby="tab-mech" hidden>
+        <div class="compare-grid">
+          <article class="side classic">
+            <span class="tag">Классики</span>
+            <h3>Диалог с автором</h3>
+            <p>Авторитет текста и традиции. Ученик спорит с учителем, читатель вступает в диалог с автором через книгу.</p>
+            <ul>
+              <li>Дистанция между автором и читателем сохраняется</li>
+              <li>Влияние идёт через размышление, а не через симпатию</li>
+            </ul>
+            <p class="verdict">Учитель остаётся учителем, а не другом.</p>
+          </article>
+          <article class="side modern">
+            <span class="tag">Блогеры</span>
+            <h3>Ощущение близости</h3>
+            <p>«Он как друг». Исследователи Хортон и Волл (1956) назвали это парасоциальными отношениями: зритель доверяет ведущему так, будто знает его лично.</p>
+            <ul>
+              <li>Доверие строится на повторении и личном тоне</li>
+              <li>Ценности и вкусы передаются незаметно, как норма</li>
+            </ul>
+            <p class="verdict">Близость усиливает влияние — и снижает критичность.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="metrics reveal">
+        <h3>Условная шкала</h3>
+        <div class="metric">
+          <div class="metric-name">Скорость распространения</div>
+          <div class="bar-row"><span class="who">Классики</span><div class="bar c"><i data-w="28"></i></div><span class="val">28</span></div>
+          <div class="bar-row"><span class="who">Блогеры</span><div class="bar m"><i data-w="95"></i></div><span class="val">95</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-name">Глубина аргумента</div>
+          <div class="bar-row"><span class="who">Классики</span><div class="bar c"><i data-w="94"></i></div><span class="val">94</span></div>
+          <div class="bar-row"><span class="who">Блогеры</span><div class="bar m"><i data-w="30"></i></div><span class="val">30</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-name">Эмоциональное вовлечение</div>
+          <div class="bar-row"><span class="who">Классики</span><div class="bar c"><i data-w="45"></i></div><span class="val">45</span></div>
+          <div class="bar-row"><span class="who">Блогеры</span><div class="bar m"><i data-w="92"></i></div><span class="val">92</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-name">Усилие, которое требуется от читателя</div>
+          <div class="bar-row"><span class="who">Классики</span><div class="bar c"><i data-w="90"></i></div><span class="val">90</span></div>
+          <div class="bar-row"><span class="who">Блогеры</span><div class="bar m"><i data-w="18"></i></div><span class="val">18</span></div>
+        </div>
+        <p class="note">Оценки 0–100 — авторские, для наглядности. Это не результат измерений, а повод обсудить разницу.</p>
+      </div>
+    </div>
+  </section>
+  <!-- 3. ANALYSIS -->
+  <section class="section" id="analysis">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Раздел 02 · Анализ</span>
+        <h2>Что даёт — и что забирает</h2>
+        <p class="lead">Влияние само по себе нейтрально. Польза или вред зависят от того, что человек умеет делать с услышанным. Нажмите на пункт, чтобы раскрыть объяснение.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="reveal">
+          <h3 class="col-title pos"><span class="dot"></span>Позитивные аспекты</h3>
+          <div class="acc">
+            <details>
+              <summary>Доступность знаний</summary>
+              <p>Сложное объясняется простым языком, без порога цены и географии. Подросток из небольшого города получает то, что раньше было доступно лишь в столичных школах и библиотеках.</p>
+            </details>
+            <details>
+              <summary>Живой пример «такого же»</summary>
+              <p>Молодой человек видит, что путь начинается с обычных шагов. Это снимает ощущение, что успех доступен только «избранным».</p>
+            </details>
+            <details>
+              <summary>Вход в чтение и науку</summary>
+              <p>Короткое видео нередко становится первой ступенькой: ролик пробуждает интерес, а дальше человек ищет книгу или первоисточник.</p>
+            </details>
+            <details>
+              <summary>Диалог и обратная связь</summary>
+              <p>Комментарии, вопросы и эфиры превращают просмотр в разговор. Аудитория может возразить — и это тоже часть обучения.</p>
+            </details>
+            <details>
+              <summary>Голоса тех, кого не слышно</summary>
+              <p>Регионы, меньшинства и люди с редкими интересами получили трибуну, которой раньше у них не было.</p>
+            </details>
+            <details>
+              <summary>Навыки речи и создания контента</summary>
+              <p>Монтаж, сценарий, публичная речь и работа с аудиторией — реальные компетенции, которые пригодятся и вне экрана.</p>
+            </details>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <h3 class="col-title neg"><span class="dot"></span>Деструктивные аспекты</h3>
+          <div class="acc">
+            <details>
+              <summary>Клиповое мышление</summary>
+              <p>Сложный вопрос сводится к фразе, а контекст выпадает. Привычка к быстрым ответам снижает готовность читать длинные рассуждения.</p>
+            </details>
+            <details>
+              <summary>Сравнение и самооценка</summary>
+              <p>Люди склонны оценивать себя через сравнение с другими (Фестингер, 1954). Лента показывает отобранные «идеальные» жизни, и сравнение с ними почти всегда проигрышное.</p>
+            </details>
+            <details>
+              <summary>Скрытая реклама и коммерция</summary>
+              <p>Доверие аудитории становится товаром. Рекомендация может быть оплачена, а мнение — частью продажи курса, бренда или образа жизни.</p>
+            </details>
+            <details>
+              <summary>Эхо-камеры</summary>
+              <p>Алгоритм подбирает то, что уже нравится. Со временем мир молодого человека сужается до одной повестки, и различие взглядов начинает казаться угрозой.</p>
+            </details>
+            <details>
+              <summary>Культ кумира</summary>
+              <p>Решения принимаются «как у него», а не по собственному анализу. Подражание становится заменой выбору.</p>
+            </details>
+            <details>
+              <summary>Уверенность вместо проверки</summary>
+              <p>Ложное утверждение звучит так же убедительно, как верное. Распространить его можно за секунды, а проверить — за часы. Асимметрия работает против зрителя.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <blockquote class="quote reveal">
+        Вопрос не в том, есть ли у молодёжи кумиры. Вопрос в том, умеет ли она задавать им вопросы.
+        <cite>— авторский вывод раздела</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- 4. QUIZ -->
+  <section class="section" id="quiz">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Раздел 03 · Интерактив</span>
+        <h2>Проверь свой фильтр</h2>
+        <p class="lead">Пять коротких кейсов. В каждом выберите реакцию, которая кажется вам разумной, — и сравните её с разбором.</p>
+      </div>
+
+      <div class="quiz reveal">
+        <div class="quiz-card">
+          <noscript><p>Для квиза нужен JavaScript.</p></noscript>
+          <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+          <div id="quizBody" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<!-- 5. FOOTER: CONCLUSIONS -->
+<footer class="site-footer" id="conclusions">
+  <div class="container">
+    <span class="eyebrow">Раздел 04 · Выводы</span>
+    <h2>Критическое мышление — это навык, а не врождённое свойство</h2>
+    <p class="lead">Инфлюенсеры будут всегда: писатели, учёные, блогеры, тренеры. Задача не в том, чтобы запретить голоса, а в том, чтобы научиться слышать, кто стоит за ними и что ему нужно.</p>
+
+    <div class="conclusions">
+      <div class="conc reveal">
+        <div class="num">01</div>
+        <h3>Влияние не новое</h3>
+        <p>Учителя, писатели и проповедники формировали взгляды всегда. Меняются каналы и скорость, но не сам механизм доверия.</p>
+      </div>
+      <div class="conc reveal">
+        <div class="num">02</div>
+        <h3>Легко — не значит полезно</h3>
+        <p>Классика требует усилия и потому учит мыслить. Современный формат снимает усилие и тем самым рискует заменить размышление готовым ответом.</p>
+      </div>
+      <div class="conc reveal">
+        <div class="num">03</div>
+        <h3>Симпатия — не доказательство</h3>
+        <p>Близость к автору повышает доверие, но не делает его правым. Проверка аргументов важнее того, нравится ли нам человек.</p>
+      </div>
+      <div class="conc reveal">
+        <div class="num">04</div>
+        <h3>Роль взрослых — разговор, а не запрет</h3>
+        <p>Лучшая защита — обсуждение: кто автор, что он хочет продать, какие доказательства приведены. Личный пример важнее любых запретов.</p>
+      </div>
+    </div>
+
+    <div class="checklist reveal">
+      <h3>Чек-лист перед тем, как поверить</h3>
+      <ol>
+        <li>Кто говорит — и есть ли у него компетенция в этой теме?</li>
+        <li>Зачем это сказано: что автор получает от моего согласия?</li>
+        <li>Что подтверждено: есть ли источники и первоисточники?</li>
+        <li>Что упущено: какие возражения и альтернативы промолчали?</li>
+      </ol>
+    </div>
+
+    <div class="sources reveal">
+      <h4>Источники, на которые опирается сайт</h4>
+      <ol>
+        <li>Ж.-Ж. Руссо. «Эмиль, или о воспитании» (1762).</li>
+        <li>Д. Карнеги. «Как завоёвывать друзей и оказывать влияние на людей» (1936).</li>
+        <li>L. Festinger. A Theory of Social Comparison Processes // Human Relations (1954).</li>
+        <li>D. Horton, R. Wohl. Mass Communication and Para-Social Interaction // Psychiatry (1956).</li>
+        <li>Н. Постман. «Развлекаем себя до смерти» (1985).</li>
+      </ol>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 · Учебный проект о медиа и воспитании</span>
+      <a href="#top">Наверх ↑</a>
+    </div>
+  </div>
+</footer>
+<script>
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+  root.classList.add('js');
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function safeGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } }
+
+  /* ---------- 1. Theme toggle ---------- */
+  var themeBtn = document.getElementById('themeToggle');
+  var THEME_KEY = 'classics-blogs-theme';
+
+  function systemIsDark() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  }
+  function isDarkNow() {
+    var attr = root.getAttribute('data-theme');
+    return attr ? attr === 'dark' : systemIsDark();
+  }
+  function refreshThemeBtn() {
+    var dark = isDarkNow();
+    themeBtn.textContent = dark ? '☀' : '☾';
+    themeBtn.setAttribute('aria-pressed', String(dark));
+  }
+
+  var savedTheme = safeGet(THEME_KEY);
+  if (savedTheme === 'light' || savedTheme === 'dark') root.setAttribute('data-theme', savedTheme);
+  refreshThemeBtn();
+
+  themeBtn.addEventListener('click', function () {
+    var next = isDarkNow() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    safeSet(THEME_KEY, next);
+    refreshThemeBtn();
+  });
+
+  /* ---------- 2. Comparison tabs (click + arrow keys) ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+
+  function selectTab(tab, moveFocus) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      var panel = document.getElementById(t.getAttribute('aria-controls'));
+      if (panel) panel.hidden = !on;
+    });
+    if (moveFocus) tab.focus();
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { selectTab(tab, false); });
+    tab.addEventListener('keydown', function (e) {
+      var idx;
+      if (e.key === 'ArrowRight') idx = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') idx = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') idx = 0;
+      else if (e.key === 'End') idx = tabs.length - 1;
+      else return;
+      e.preventDefault();
+      selectTab(tabs[idx], true);
+    });
+  });
+
+  /* ---------- 3. Bars + scroll reveal ---------- */
+  function fillBars(scope) {
+    scope.querySelectorAll('.bar > i').forEach(function (bar) {
+      bar.style.width = bar.getAttribute('data-w') + '%';
+    });
+  }
+
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        el.classList.add('in');
+        if (el.classList.contains('metrics')) fillBars(el);
+        io.unobserve(el);
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('in'); });
+    fillBars(document);
+  }
+
+  /* ---------- 4. Quiz ---------- */
+  var QUESTIONS = [
+    {
+      meta: 'Кейс 1 · Обещание быстрого успеха',
+      text: 'Как вы отнесётесь к этому видео?',
+      situation: '«Школа — ловушка. Я за месяц заработал миллион на этой схеме. Ссылка на курс в описании».',
+      options: [
+        { t: 'Звучит вдохновляюще — сохраню схему и попробую.', ok: false },
+        { t: 'Проверю: есть ли подтверждение дохода и кто продаёт курс по этой схеме.', ok: true },
+        { t: 'Автор говорит уверенно — значит, он знает, что делает.', ok: false }
+      ],
+      explain: 'Обещание быстрого результата в сочетании с продажей курса — классический признак коммерческого интереса. Сначала стоит понять, кому выгодна ваша вера, и только потом разбирать содержание.',
+      tag: 'Приём: коммерция и обещания'
+    },
+    {
+      meta: 'Кейс 2 · Тайна и сенсация',
+      text: 'Как отнестись к посту в канале?',
+      situation: '«Учёные молчат о том, что на самом деле вызывает эту проблему. Перешлите, пока не удалили!»',
+      options: [
+        { t: 'Сенсация, наверное, правда — перешлю друзьям.', ok: false },
+        { t: 'Найду первоисточник: кто автор и есть ли ссылки на исследования.', ok: true },
+        { t: '«Пока не удалили» — значит, это запрещённая правда.', ok: false }
+      ],
+      explain: 'Интрига и призыв поделиться «пока не удалили» рассчитаны на эмоцию и скорость распространения. Надёжное утверждение можно проследить до первоисточника.',
+      tag: 'Приём: эмоция вместо доказательства'
+    },
+    {
+      meta: 'Кейс 3 · Совет против чтения',
+      text: 'Что ответить другу?',
+      situation: 'Блогер говорит: «Не читай классику — там скучно и всё то же самое. Смотри короткие ролики, там суть за минуту». Друг повторяет это вам.',
+      options: [
+        { t: 'Согласен: времени мало, суть за минуту — то, что нужно.', ok: false },
+        { t: '«Суть за минуту» — это скорее пересказ. Давай прочитаем отрывок и сравним, что есть в оригинале, а чего нет в ролике.', ok: true },
+        { t: 'Перестану смотреть блогеров и закроюсь от любых мнений.', ok: false }
+      ],
+      explain: 'Короткий формат неизбежно сокращает аргумент. Сравнение оригинала с пересказом — лучший способ увидеть, что потеряно. Полный отказ от информации тоже не учит думать: нужен не запрет, а проверка.',
+      tag: 'Приём: упрощение и сравнение источников'
+    },
+    {
+      meta: 'Кейс 4 · Сравнение с витриной',
+      text: 'Что происходит с вашим настроением?',
+      situation: 'Кумир выкладывает фото: «Я делаю это каждый день без усилий». Вы смотрите на свою жизнь — и чувствуете, что вы недостаточны.',
+      options: [
+        { t: 'Это мотивация: стану таким же, как он.', ok: false },
+        { t: 'Это витрина, а не вся картина. Я сравниваю свою жизнь с его отобранным лучшим кадром.', ok: true },
+        { t: 'Мне безразлично — ко мне это не относится.', ok: false }
+      ],
+      explain: 'Люди склонны оценивать себя через сравнение с другими (Фестингер, 1954). Лента показывает отобранные моменты, поэтому сравнение почти всегда несправедливо. Полезно заметить этот эффект и не принимать его за оценку себя.',
+      tag: 'Приём: сравнение с витриной'
+    },
+    {
+      meta: 'Кейс 5 · Аргумент «он же миллионник»',
+      text: 'Как вести спор с одноклассником?',
+      situation: 'Одноклассник: «Так сказал блогер — у него миллион подписчиков, значит, он прав». Вы хотите разобраться, а не победить.',
+      options: [
+        { t: 'Соглашусь: миллион подписчиков — серьёзный довод.', ok: false },
+        { t: 'Спрошу: что именно доказано, есть ли у автора экспертиза в этой теме и какие есть другие мнения.', ok: true },
+        { t: 'Отвечу: все блогеры врут, верить никому нельзя.', ok: false }
+      ],
+      explain: 'Число подписчиков говорит о популярности, а не о правоте. Вопросы о доказательствах и экспертизе возвращают разговор к аргументам. Обобщение «все врут» так же необоснованно, как слепое доверие.',
+      tag: 'Приём: популярность — не истина'
+    }
+  ];
+
+  var body = document.getElementById('quizBody');
+  var progress = document.getElementById('progressBar');
+  var state = { i: 0, score: 0, answered: false };
+
+  function renderQuestion() {
+    var q = QUESTIONS[state.i];
+    state.answered = false;
+    progress.style.width = (state.i / QUESTIONS.length * 100) + '%';
+
+    body.innerHTML =
+      '<div class="q-meta">' + esc(q.meta) + ' · ' + (state.i + 1) + ' / ' + QUESTIONS.length + '</div>' +
+      '<div class="q-text">' + esc(q.text) + '</div>' +
+      '<div class="case">' + esc(q.situation) + '</div>' +
+      '<div class="options" role="group" aria-label="Варианты ответа">' +
+        q.options.map(function (o, idx) {
+          return '<button class="opt" type="button" data-idx="' + idx + '">' + esc(o.t) + '</button>';
+        }).join('') +
+      '</div>' +
+      '<div class="feedback" id="feedback" aria-live="polite"></div>' +
+      '<div class="quiz-actions">' +
+        '<button class="btn btn-primary hidden" id="nextBtn" type="button">' +
+          (state.i === QUESTIONS.length - 1 ? 'Показать результат' : 'Дальше →') +
+        '</button>' +
+      '</div>';
+  }
+
+  function answer(idx) {
+    var q = QUESTIONS[state.i];
+    var chosen = q.options[idx];
+    state.answered = true;
+    if (chosen.ok) state.score++;
+
+    body.querySelectorAll('.opt').forEach(function (btn, i) {
+      btn.disabled = true;
+      if (q.options[i].ok) btn.classList.add('correct');
+      else if (i === idx) btn.classList.add('wrong');
+    });
+
+    var fb = document.getElementById('feedback');
+    fb.innerHTML = '<strong>' + (chosen.ok ? 'Верно.' : 'Не совсем.') + '</strong>' +
+      esc(q.explain) + '<br><em>' + esc(q.tag) + '</em>';
+    fb.classList.add('show');
+    document.getElementById('nextBtn').classList.remove('hidden');
+  }
+
+  function renderResult() {
+    progress.style.width = '100%';
+    var s = state.score;
+    var n = QUESTIONS.length;
+    var r;
+    if (s === n) {
+      r = ['Аналитик', 'Вы почти всегда спрашиваете «кто, зачем, что проверено». Это и есть критическое мышление в действии.'];
+    } else if (s >= 3) {
+      r = ['Внимательный зритель', 'Вы замечаете большинство приёмов, но иногда эмоция опережает проверку. Это нормально: навык тренируется.'];
+    } else {
+      r = ['Под влиянием эмоций', 'Сильная реакция на эмоциональные посты — не приговор. Задавайте себе четыре вопроса из чек-листа каждый раз — через несколько недель это станет привычкой.'];
+    }
+    body.innerHTML =
+      '<div class="result">' +
+        '<div class="score">' + s + '/' + n + '</div>' +
+        '<h3>' + esc(r[0]) + '</h3>' +
+        '<p>' + esc(r[1]) + '</p>' +
+        '<button class="btn btn-primary" id="restartBtn" type="button">Пройти ещё раз</button>' +
+      '</div>';
+  }
+
+  body.addEventListener('click', function (e) {
+    var t = e.target;
+    if (!(t instanceof Element)) return;
+    if (t.classList.contains('opt') && !state.answered) {
+      answer(Number(t.getAttribute('data-idx')));
+    } else if (t.id === 'nextBtn') {
+      state.i++;
+      if (state.i >= QUESTIONS.length) renderResult();
+      else renderQuestion();
+    } else if (t.id === 'restartBtn') {
+      state.i = 0;
+      state.score = 0;
+      renderQuestion();
+    }
+  });
+
+  renderQuestion();
+})();
+</script>
+</body>
+</html>
